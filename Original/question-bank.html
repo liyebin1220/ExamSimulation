@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank Management</title>
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+        
+        .management-container {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .import-export-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        #fileImport {
+            display: none;
+        }
+        
+        .question-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .form-group label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .form-control {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .question-list {
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .question-item {
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .question-item .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-item .question-type {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        .question-item .question-type.single {
+            background-color: #bbdefb;
+            color: #1565c0;
+        }
+
+        .question-item .question-type.multi {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+        }
+        
+        .question-item .options-list {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .question-item .action-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+        }
+        
+        .question-item .action-btn {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        
+        .exam-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0b7dda;
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #333;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e6ac00;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        /* 选项管理样式 */
+        .options-container {
+            margin-bottom: 15px;
+        }
+        
+        .option-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .option-group input {
+            flex: 1;
+        }
+        
+        .remove-option {
+            padding: 8px 12px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .add-option-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* 编辑问题模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        #editQuestionModal .modal-content {
+            width: 600px;
+            max-width: 90%;
+            text-align: left;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .modal-backdrop.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .question-item .action-buttons {
+                position: static;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="management-container">
+        <h2>Question Bank Management</h2>
+        
+        <div class="import-export-controls">
+            <button class="btn btn-primary" id="exportBtn">Export Question Bank</button>
+            <label for="fileImport" class="btn btn-warning">Import Question Bank</label>
+            <input type="file" id="fileImport" accept=".json">
+            <button class="btn btn-danger" id="clearQuestionsBtn">Clear All Questions</button>
+            <button class="btn btn-primary" id="startExamBtn" disabled>Start Exam</button>
+        </div>
+        
+        <h3>Add New Question</h3>
+        <form class="question-form" id="questionForm">
+            <div class="form-group">
+                <label for="questionType">Question Type</label>
+                <select id="questionType" class="form-control" required>
+                    <option value="single">Single Choice</option>
+                    <option value="multiple">Multiple Choice</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="questionText">Question Content</label>
+                <textarea id="questionText" class="form-control" required placeholder="Enter question content..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Options</label>
+                <div class="options-container" id="optionsContainerAdd">
+                    <div class="option-group">
+                        <input type="text" name="options" class="form-control" required placeholder="Option A content">
+                        <button type="button" class="remove-option" disabled>×</button>
+                    </div>
+                    <div class="option-group">
+                        <input type="text" name="options" class="form-control" required placeholder="Option B content">
+                        <button type="button" class="remove-option" disabled>×</button>
+                    </div>
+                    <div class="option-group">
+                        <input type="text" name="options" class="form-control" required placeholder="Option C content">
+                        <button type="button" class="remove-option">×</button>
+                    </div>
+                    <div class="option-group">
+                        <input type="text" name="options" class="form-control" required placeholder="Option D content">
+                        <button type="button" class="remove-option">×</button>
+                    </div>
+                </div>
+                <button type="button" class="add-option-btn" id="addOptionBtn">Add Option</button>
+            </div>
+            
+            <div class="form-group" id="correctAnswerGroup">
+                <label for="correctAnswer">Correct Answer (For multiple choice, separate with commas, e.g. A,B,C)</label>
+                <input type="text" id="correctAnswer" class="form-control" required placeholder="Correct answer">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Add Question</button>
+        </form>
+        
+        <h3 style="margin-top: 30px;">Added Questions (<span id="questionCount">0</span>)</h3>
+        <div class="question-list" id="questionList">
+            <!-- 问题将在这里动态生成 -->
+            <p>No questions yet. Please add questions.</p>
+        </div>
+    </div>
+    
+    <!-- 编辑问题模态框 -->
+    <div class="modal-backdrop" id="editModalBackdrop"></div>
+    <div class="modal" id="editQuestionModal">
+        <div class="modal-content">
+            <h3>Edit Question</h3>
+            <form class="question-form" id="editQuestionForm">
+                <input type="hidden" id="editQuestionId">
+                <div class="form-group">
+                    <label for="editQuestionType">Question Type</label>
+                    <select id="editQuestionType" class="form-control" required>
+                        <option value="single">Single Choice</option>
+                        <option value="multiple">Multiple Choice</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editQuestionText">Question Content</label>
+                    <textarea id="editQuestionText" class="form-control" required placeholder="Enter question content..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Options</label>
+                    <div class="options-container" id="optionsContainerEdit">
+                        <!-- 动态选项将在这里添加 -->
+                    </div>
+                    <button type="button" class="add-option-btn" id="addEditOptionBtn">Add Option</button>
+                </div>
+                
+                <div class="form-group" id="editCorrectAnswerGroup">
+                    <label for="editCorrectAnswer">Correct Answer (For multiple choice, separate with commas, e.g. A,B,C)</label>
+                    <input type="text" id="editCorrectAnswer" class="form-control" required placeholder="Correct answer">
+                </div>
+                
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-primary" id="cancelEdit">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 检查考试是否正在进行中
+        window.addEventListener('DOMContentLoaded', () => {
+            const examInProgress = localStorage.getItem('examInProgress');
+            if (examInProgress === 'true') {
+                alert('考试正在进行中，无法访问题库管理页面！');
+                window.location.href = 'exam.html';
+            }
+        });
+
+        // 全局状态管理
+        const appState = {
+            questionBank: [] // 存储所有问题 {id, type: 'single'|'multiple', text, options: {A, B, C, D, ...}, correctAnswer: string|string[]}
+        };
+        
+        // DOM元素
+        const questionForm = document.getElementById('questionForm');
+        const questionList = document.getElementById('questionList');
+        const questionCount = document.getElementById('questionCount');
+        const startExamBtn = document.getElementById('startExamBtn');
+        const clearQuestionsBtn = document.getElementById('clearQuestionsBtn');
+        const questionTypeSelect = document.getElementById('questionType');
+        const correctAnswerInput = document.getElementById('correctAnswer');
+        const exportBtn = document.getElementById('exportBtn');
+        const fileImport = document.getElementById('fileImport');
+        const optionsContainerAdd = document.getElementById('optionsContainerAdd');
+        const addOptionBtn = document.getElementById('addOptionBtn');
+        
+        // 编辑问题模态框元素
+        const editQuestionModal = document.getElementById('editQuestionModal');
+        const editQuestionForm = document.getElementById('editQuestionForm');
+        const editModalBackdrop = document.getElementById('editModalBackdrop');
+        const cancelEditBtn = document.getElementById('cancelEdit');
+        const editQuestionIdInput = document.getElementById('editQuestionId');
+        const optionsContainerEdit = document.getElementById('optionsContainerEdit');
+        const addEditOptionBtn = document.getElementById('addEditOptionBtn');
+        
+        // localStorage 相关函数
+        function saveQuestionBankToLocalStorage() {
+            localStorage.setItem('examQuestionBank', JSON.stringify(appState.questionBank));
+        }
+        
+        function loadQuestionBankFromLocalStorage() {
+            const savedQuestions = localStorage.getItem('examQuestionBank');
+            if (savedQuestions) {
+                try {
+                    appState.questionBank = JSON.parse(savedQuestions);
+                    renderQuestionList();
+                    updateStartExamButton();
+                } catch (e) {
+                    console.error('Failed to parse question bank from localStorage:', e);
+                    localStorage.removeItem('examQuestionBank');
+                }
+            }
+        }
+        
+        // 初始化选项删除按钮事件
+        function initRemoveOptionEvents(container) {
+            const removeButtons = container.querySelectorAll('.remove-option');
+            removeButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const optionGroups = container.querySelectorAll('.option-group');
+                    if (optionGroups.length > 2) { // 至少保留2个选项
+                        this.parentElement.remove();
+                        updateOptionLabels(container);
+                        updateRemoveButtons(container);
+                    }
+                });
+            });
+        }
+        
+        // 更新选项标签(A, B, C...)
+        function updateOptionLabels(container) {
+            const optionGroups = container.querySelectorAll('.option-group');
+            optionGroups.forEach((group, index) => {
+                const label = String.fromCharCode(65 + index); // A, B, C...
+                const input = group.querySelector('input');
+                input.placeholder = `Option ${label} content`;
+            });
+        }
+        
+        // 更新删除按钮状态
+        function updateRemoveButtons(container) {
+            const optionGroups = container.querySelectorAll('.option-group');
+            const removeButtons = container.querySelectorAll('.remove-option');
+            
+            removeButtons.forEach((btn, index) => {
+                btn.disabled = optionGroups.length <= 2;
+            });
+        }
+        
+        // 添加新选项
+        function addNewOption(container) {
+            const optionGroups = container.querySelectorAll('.option-group');
+            const newIndex = optionGroups.length;
+            const label = String.fromCharCode(65 + newIndex);
+            
+            const newOptionGroup = document.createElement('div');
+            newOptionGroup.className = 'option-group';
+            newOptionGroup.innerHTML = `
+                <input type="text" name="options" class="form-control" required placeholder="Option ${label} content">
+                <button type="button" class="remove-option">×</button>
+            `;
+            
+            container.appendChild(newOptionGroup);
+            initRemoveOptionEvents(container);
+            updateRemoveButtons(container);
+        }
+        
+        // 添加选项按钮事件
+        addOptionBtn.addEventListener('click', () => {
+            addNewOption(optionsContainerAdd);
+        });
+        
+        addEditOptionBtn.addEventListener('click', () => {
+            addNewOption(optionsContainerEdit);
+        });
+        
+        // 渲染问题列表
+        function renderQuestionList() {
+            if (appState.questionBank.length === 0) {
+                questionList.innerHTML = '<p>No questions yet. Please add questions.</p>';
+                questionCount.textContent = '0';
+                return;
+            }
+            
+            questionCount.textContent = appState.questionBank.length;
+            questionList.innerHTML = '';
+            
+            appState.questionBank.forEach(question => {
+                const questionItem = document.createElement('div');
+                questionItem.className = 'question-item';
+                
+                // 构建选项列表HTML
+                let optionsHtml = '<div class="options-list">';
+                for (const [key, value] of Object.entries(question.options)) {
+                    optionsHtml += `<div><strong>${key}.</strong> ${value}</div>`;
+                }
+                optionsHtml += '</div>';
+                
+                // 构建正确答案显示
+                let correctAnswerDisplay = Array.isArray(question.correctAnswer) 
+                    ? question.correctAnswer.join(', ') 
+                    : question.correctAnswer;
+                
+                questionItem.innerHTML = `
+                    <div class="question-type ${question.type}">${question.type === 'single' ? 'Single Choice' : 'Multiple Choice'}</div>
+                    <div class="question-text">${question.text}</div>
+                    ${optionsHtml}
+                    <div><strong>Correct Answer:</strong> ${correctAnswerDisplay}</div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary action-btn edit-question" data-id="${question.id}">Edit</button>
+                        <button class="btn btn-danger action-btn delete-question" data-id="${question.id}">Delete</button>
+                    </div>
+                `;
+                
+                questionList.appendChild(questionItem);
+            });
+            
+            // 添加编辑和删除事件监听
+            document.querySelectorAll('.edit-question').forEach(btn => {
+                btn.addEventListener('click', () => editQuestion(btn.getAttribute('data-id')));
+            });
+            
+            document.querySelectorAll('.delete-question').forEach(btn => {
+                btn.addEventListener('click', () => deleteQuestion(btn.getAttribute('data-id')));
+            });
+        }
+        
+        // 添加问题
+        questionForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const questionType = document.getElementById('questionType').value;
+            const questionText = document.getElementById('questionText').value;
+            const correctAnswerInput = document.getElementById('correctAnswer').value;
+            
+            // 收集选项
+            const optionInputs = optionsContainerAdd.querySelectorAll('input[name="options"]');
+            const options = {};
+            const availableOptions = [];
+            
+            optionInputs.forEach((input, index) => {
+                const label = String.fromCharCode(65 + index); // A, B, C...
+                const optionValue = input.value.trim();
+                if (optionValue) {
+                    options[label] = optionValue;
+                    availableOptions.push(label);
+                }
+            });
+            
+            // 验证至少有2个选项
+            if (availableOptions.length < 2) {
+                alert('Please add at least 2 options for the question.');
+                return;
+            }
+            
+            // 处理并验证正确答案
+            let correctAnswer;
+            if (questionType === 'multiple') {
+                correctAnswer = correctAnswerInput.split(',').map(ans => ans.trim().toUpperCase()).filter(ans => ans);
+                
+                // 验证所有答案都在可用选项中
+                const invalidAnswers = correctAnswer.filter(ans => !availableOptions.includes(ans));
+                if (invalidAnswers.length > 0) {
+                    alert(`Invalid answer(s): ${invalidAnswers.join(', ')}. Please use only available option labels (${availableOptions.join(', ')}).`);
+                    return;
+                }
+                
+                // 验证至少有一个正确答案
+                if (correctAnswer.length === 0) {
+                    alert('Please provide at least one correct answer for multiple choice questions.');
+                    return;
+                }
+                
+                correctAnswer = correctAnswer.sort();
+            } else {
+                correctAnswer = correctAnswerInput.trim().toUpperCase();
+                
+                // 验证答案在可用选项中
+                if (!availableOptions.includes(correctAnswer)) {
+                    alert(`Invalid answer. Please use only available option labels (${availableOptions.join(', ')}).`);
+                    return;
+                }
+            }
+            
+            // 创建新问题
+            const newQuestion = {
+                id: Date.now().toString(), // 使用时间戳作为唯一ID
+                type: questionType,
+                text: questionText,
+                options: options,
+                correctAnswer: correctAnswer
+            };
+            
+            // 添加到题库
+            appState.questionBank.push(newQuestion);
+            
+            // 保存并重新渲染
+            saveQuestionBankToLocalStorage();
+            renderQuestionList();
+            updateStartExamButton();
+            
+            // 重置表单
+            this.reset();
+            // 重置选项到初始状态
+            optionsContainerAdd.innerHTML = `
+                <div class="option-group">
+                    <input type="text" name="options" class="form-control" required placeholder="Option A content">
+                    <button type="button" class="remove-option" disabled>×</button>
+                </div>
+                <div class="option-group">
+                    <input type="text" name="options" class="form-control" required placeholder="Option B content">
+                    <button type="button" class="remove-option" disabled>×</button>
+                </div>
+                <div class="option-group">
+                    <input type="text" name="options" class="form-control" required placeholder="Option C content">
+                    <button type="button" class="remove-option">×</button>
+                </div>
+                <div class="option-group">
+                    <input type="text" name="options" class="form-control" required placeholder="Option D content">
+                    <button type="button" class="remove-option">×</button>
+                </div>
+            `;
+            initRemoveOptionEvents(optionsContainerAdd);
+        });
+        
+        // 编辑问题
+        function editQuestion(id) {
+            const question = appState.questionBank.find(q => q.id === id);
+            if (!question) return;
+            
+            // 填充表单数据
+            editQuestionIdInput.value = question.id;
+            document.getElementById('editQuestionType').value = question.type;
+            document.getElementById('editQuestionText').value = question.text;
+            
+            // 填充选项
+            optionsContainerEdit.innerHTML = '';
+            Object.values(question.options).forEach((option, index) => {
+                const label = String.fromCharCode(65 + index);
+                const optionGroup = document.createElement('div');
+                optionGroup.className = 'option-group';
+                optionGroup.innerHTML = `
+                    <input type="text" name="options" class="form-control" required placeholder="Option ${label} content" value="${option}">
+                    <button type="button" class="remove-option">×</button>
+                `;
+                optionsContainerEdit.appendChild(optionGroup);
+            });
+            
+            // 更新选项状态
+            updateOptionLabels(optionsContainerEdit);
+            updateRemoveButtons(optionsContainerEdit);
+            initRemoveOptionEvents(optionsContainerEdit);
+            
+            // 填充正确答案
+            const correctAnswerDisplay = Array.isArray(question.correctAnswer)
+                ? question.correctAnswer.join(', ')
+                : question.correctAnswer;
+            document.getElementById('editCorrectAnswer').value = correctAnswerDisplay;
+            
+            // 显示模态框
+            editQuestionModal.style.display = 'flex';
+            editModalBackdrop.classList.add('active');
+        }
+        
+        // 保存编辑的问题
+        editQuestionForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const questionId = editQuestionIdInput.value;
+            const questionIndex = appState.questionBank.findIndex(q => q.id === questionId);
+            if (questionIndex === -1) return;
+            
+            // 收集表单数据
+            const questionType = document.getElementById('editQuestionType').value;
+            const questionText = document.getElementById('editQuestionText').value;
+            const correctAnswerInput = document.getElementById('editCorrectAnswer').value;
+            
+            // 收集选项
+            const optionInputs = optionsContainerEdit.querySelectorAll('input[name="options"]');
+            const options = {};
+            const availableOptions = [];
+            
+            optionInputs.forEach((input, index) => {
+                const label = String.fromCharCode(65 + index); // A, B, C...
+                const optionValue = input.value.trim();
+                if (optionValue) {
+                    options[label] = optionValue;
+                    availableOptions.push(label);
+                }
+            });
+            
+            // 验证至少有2个选项
+            if (availableOptions.length < 2) {
+                alert('Please add at least 2 options for the question.');
+                return;
+            }
+            
+            // 处理并验证正确答案
+            let correctAnswer;
+            if (questionType === 'multiple') {
+                correctAnswer = correctAnswerInput.split(',').map(ans => ans.trim().toUpperCase()).filter(ans => ans);
+                
+                // 验证所有答案都在可用选项中
+                const invalidAnswers = correctAnswer.filter(ans => !availableOptions.includes(ans));
+                if (invalidAnswers.length > 0) {
+                    alert(`Invalid answer(s): ${invalidAnswers.join(', ')}. Please use only available option labels (${availableOptions.join(', ')}).`);
+                    return;
+                }
+                
+                // 验证至少有一个正确答案
+                if (correctAnswer.length === 0) {
+                    alert('Please provide at least one correct answer for multiple choice questions.');
+                    return;
+                }
+                
+                correctAnswer = correctAnswer.sort();
+            } else {
+                correctAnswer = correctAnswerInput.trim().toUpperCase();
+                
+                // 验证答案在可用选项中
+                if (!availableOptions.includes(correctAnswer)) {
+                    alert(`Invalid answer. Please use only available option labels (${availableOptions.join(', ')}).`);
+                    return;
+                }
+            }
+            
+            // 更新问题
+            appState.questionBank[questionIndex] = {
+                ...appState.questionBank[questionIndex],
+                type: questionType,
+                text: questionText,
+                options: options,
+                correctAnswer: correctAnswer
+            };
+            
+            // 保存并重新渲染
+            saveQuestionBankToLocalStorage();
+            renderQuestionList();
+            
+            // 关闭模态框
+            editQuestionModal.style.display = 'none';
+            editModalBackdrop.classList.remove('active');
+        });
+        
+        // 取消编辑
+        cancelEditBtn.addEventListener('click', () => {
+            editQuestionModal.style.display = 'none';
+            editModalBackdrop.classList.remove('active');
+        });
+        
+        // 删除问题
+        function deleteQuestion(id) {
+            if (confirm('Are you sure you want to delete this question?')) {
+                appState.questionBank = appState.questionBank.filter(q => q.id !== id);
+                saveQuestionBankToLocalStorage();
+                renderQuestionList();
+                updateStartExamButton();
+            }
+        }
+        
+        // 清空所有问题
+        clearQuestionsBtn.addEventListener('click', () => {
+            if (appState.questionBank.length === 0) {
+                alert('No questions to clear');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to clear all questions? This action cannot be undone.')) {
+                appState.questionBank = [];
+                saveQuestionBankToLocalStorage();
+                renderQuestionList();
+                updateStartExamButton();
+            }
+        });
+        
+        // 导出题库
+        exportBtn.addEventListener('click', () => {
+            if (appState.questionBank.length === 0) {
+                alert('No questions to export');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(appState.questionBank, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = 'question-bank.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        });
+        
+        // 导入题库
+        fileImport.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const importedQuestions = JSON.parse(event.target.result);
+                    
+                    // 验证导入的数据格式
+                    if (Array.isArray(importedQuestions) && importedQuestions.length > 0) {
+                        appState.questionBank = importedQuestions;
+                        saveQuestionBankToLocalStorage();
+                        renderQuestionList();
+                        updateStartExamButton();
+                        alert(`Successfully imported ${importedQuestions.length} questions`);
+                    } else {
+                        alert('Invalid question bank format');
+                    }
+                } catch (e) {
+                    console.error('Failed to import question bank:', e);
+                    alert('Failed to import question bank. Please check the file format.');
+                }
+            };
+            reader.readAsText(file);
+            
+            // 重置文件输入，允许重复选择同一个文件
+            this.value = '';
+        });
+        
+        // 更新开始考试按钮状态
+        function updateStartExamButton() {
+            startExamBtn.disabled = appState.questionBank.length === 0;
+        }
+        
+        // 跳转到考试页面
+        startExamBtn.addEventListener('click', () => {
+            window.location.href = 'exam.html';
+        });
+        
+        // 初始化
+        function init() {
+            loadQuestionBankFromLocalStorage();
+            initRemoveOptionEvents(optionsContainerAdd);
+        }
+        
+        // 页面加载时初始化
+        init();
+    </script>
+</body>
+</html>

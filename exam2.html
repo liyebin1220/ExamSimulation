@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Exam Simulation (Vue.js)</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="i18n.js"></script>
+    <style>
+        /* 保持原样式不变 */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+        
+        .exam-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .answer-sheet {
+            width: 300px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .exam-content {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            min-height: 500px;
+            min-width: 300px;
+        }
+        
+        .question-numbers {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            padding: 5px;
+        }
+        
+        .question-number {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #333;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .question-number:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* 答题状态样式 */
+        .question-number.answered {
+            background-color: #2E7D32;
+            color: white;
+            border-color: #1B5E20;
+        }
+
+        .question-number.unanswered {
+            background-color: white;
+        }
+
+        .question-number.current {
+            border: 2px solid #2196F3;
+            transform: scale(1.1);
+        }
+
+        .question-number.marked {
+            background-color: #f57c00;
+            color: #ffffff;
+        }
+
+        .question-number.multi {
+            border-style: dashed;
+        }
+
+        .question-number.correct {
+            background-color: #81C784;
+            color: white;
+        }
+
+        .question-number.incorrect {
+            background-color: #E57373;
+            color: white;
+        }
+        
+        .status-legend {
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 13px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 2px;
+        }
+        
+        .timer {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #e74c3c;
+        }
+        
+        .question-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .question-content {
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .option {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer; /* 鼠标显示为小手 */
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            user-select: none; /* 禁止文字选择 */
+        }
+        
+        .option:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .option.selected {
+            background-color: #e3f2fd;
+            border-color: #2196F3;
+        }
+
+        .option.correct {
+            background-color: #C8E6C9;
+            border-color: #2E7D32;
+        }
+
+        .option.incorrect {
+            background-color: #FFCDD2;
+            border-color: #C62828;
+        }
+
+        .option-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer; /* 鼠标显示为小手 */
+        }
+
+        .option-radio {
+            width: 18px;
+            height: 18px;
+            cursor: pointer; /* 鼠标显示为小手 */
+        }
+        
+        .option label {
+            cursor: pointer; /* 鼠标显示为小手 */
+            flex: 1;
+            user-select: none; /* 禁止文字选择 */
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 8px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0b7dda;
+        }
+        
+        .btn-warning {
+            background-color: #f57c00;
+            color: #ffffff;
+        }
+        
+        .btn-warning:hover {
+            background-color: #ef6c00;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        /* 反馈区域样式 */
+        .feedback-container {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .feedback {
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #2E7D32;
+            border: 1px solid #1B5E20;
+            color: white;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background-color: #C62828;
+            border: 1px solid #B71C1C;
+            color: white;
+            display: block;
+        }
+
+        .feedback-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .feedback-content {
+            margin-left: 10px;
+            line-height: 1.6;
+        }
+
+        .feedback-comparison {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 4px;
+        }
+
+        .feedback-item {
+            margin: 5px 0;
+        }
+
+        /* 确保在小屏幕上有良好的显示效果 */
+        /* 语言切换样式 */
+        .language-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .language-switch select {
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .answer-sheet {
+                width: 100%;
+                order: 2;
+                padding: 15px;
+            }
+            
+            .exam-container {
+                flex-direction: column;
+            }
+            
+            .exam-content {
+                order: 1;
+                padding: 15px;
+                min-height: auto;
+            }
+            
+            .question-numbers {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .nav-buttons {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+            
+            .action-buttons {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            /* 响应式语言切换 - 保持水平排列更紧凑 */
+            .exam-container > div:first-child {
+                flex-direction: row;
+                gap: 10px;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            
+            /* 优化语言切换组件大小 */
+            .language-switch {
+                gap: 8px;
+            }
+            
+            .language-switch select {
+                padding: 4px 8px;
+                font-size: 13px;
+            }
+            
+            /* 优化按钮大小 */
+            .btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            
+            /* 优化选项样式 */
+            .option {
+                padding: 10px;
+            }
+            
+            /* 优化问题内容 */
+            .question-content {
+                margin: 15px 0;
+                line-height: 1.5;
+            }
+        }
+        
+        /* 针对更小屏幕的优化 */
+        @media (max-width: 480px) {
+            .question-numbers {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            
+            .question-number {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+            }
+            
+            body {
+                padding: 5px;
+            }
+            
+            .answer-sheet,
+            .exam-content {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="exam-container">
+            <!-- 返回主页按钮和语言切换 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; width: 100%;">
+                <div class="language-switch">
+                    <label for="languageSelect">{{ currentLanguage.languageSwitch.label }}:</label>
+                    <select id="languageSelect" v-model="currentLang" @change="switchLanguage">
+                        <option value="zh">{{ currentLanguage.languageSwitch.zh }}</option>
+                        <option value="en">{{ currentLanguage.languageSwitch.en }}</option>
+                    </select>
+                </div>
+                <a href="index2.html" class="btn btn-primary">{{ currentLanguage.common.backToHome }}</a>
+            </div>
+            <!-- 答题卡组件 -->
+            <div class="answer-sheet">
+                <h3>{{ currentLanguage.examPage.answerSheet }}</h3>
+                <div class="timer">{{ currentLanguage.examPage.timer }} {{ formattedTime }}</div>
+                <div class="status-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: white; border: 1px solid #333;"></div>
+                        <span>{{ currentLanguage.examPage.statusLegend.unanswered }}</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #4CAF50;"></div>
+                        <span>{{ currentLanguage.examPage.statusLegend.answered }}</span>
+                    </div>
+                    <div class="legend-item">
+                    <div class="legend-color" style="background-color: #f57c00;"></div>
+                    <span>{{ currentLanguage.examPage.statusLegend.marked }}</span>
+                </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="border: 2px solid #2196F3;"></div>
+                        <span>{{ currentLanguage.examPage.statusLegend.current }}</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: white; border: 1px dashed #333;"></div>
+                        <span>{{ currentLanguage.examPage.statusLegend.multipleChoice }}</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #81C784;"></div>
+                        <span>{{ currentLanguage.examPage.statusLegend.correct }}</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #E57373;"></div>
+                        <span>{{ currentLanguage.examPage.statusLegend.incorrect }}</span>
+                    </div>
+                </div>
+                <div class="question-numbers">
+                    <p v-for="(question, index) in questionBank" :key="question.id"
+                       :class="[
+                           'question-number',
+                           question.type === 'multiple' ? 'multi' : '',
+                           { answered: isAnswered(question.id) },
+                           { current: question.id === currentQuestionId },
+                           { marked: markedQuestions.has(question.id) },
+                           examState.isExamSubmitted ? (isCorrect(question.id) ? 'correct' : (isAnswered(question.id) ? 'incorrect' : 'unanswered')) : ''
+                       ]"
+                       @click="switchQuestion(question.id)">
+                        {{ index + 1 }}
+                    </p>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" @click="openResetModal" :disabled="!examState.isExamStarted || examState.isExamSubmitted">{{ currentLanguage.examPage.actionButtons.resetExam }}</button>
+                    <button class="btn btn-danger" @click="openSubmitModal" :disabled="!examState.isExamStarted || examState.isExamSubmitted">{{ currentLanguage.examPage.actionButtons.submitExam }}</button>
+                </div>
+            </div>
+            
+            <!-- 题目内容组件 -->
+            <div class="exam-content">
+                <div class="question-header">
+                    <h3 v-html="currentLanguage.examPage.questionHeader.replace('{{ currentIndex + 1 }}', currentQuestionIndex + 1).replace('{{ totalCount }}', questionBank.length)"></h3>
+                </div>
+                <div class="question-content" v-if="currentQuestion">
+                    {{ currentQuestion.text }}
+                </div>
+                <div class="question-content" v-else>
+                    {{ currentLanguage.examPage.noQuestions }}
+                </div>
+                
+                <!-- 选项组件 -->
+                <div class="options" v-if="currentQuestion">
+                    <div v-for="(option, key) in currentQuestion.options" :key="key"
+                         :class="[
+                             'option',
+                             { selected: isOptionSelected(key) },
+                             examState.isExamSubmitted || examState.confirmed.has(currentQuestionId) ? (isOptionCorrect(key) ? 'correct' : (isOptionSelected(key) && !isOptionCorrect(key) ? 'incorrect' : '')) : ''
+                         ]"
+                         @click="selectOption(key)">
+                        <input v-if="currentQuestion.type === 'single'" type="radio" :id="`q_${currentQuestion.id}_${key}`"
+                               :name="`q_${currentQuestion.id}`" :value="key" v-model="currentQuestionAnswer"
+                               :disabled="examState.isExamSubmitted"
+                               class="option-radio">
+                        <input v-else type="checkbox" :id="`q_${currentQuestion.id}_${key}`"
+                               :value="key" v-model="currentQuestionAnswer"
+                               :disabled="examState.isExamSubmitted"
+                               class="option-checkbox">
+                        <label :for="`q_${currentQuestion.id}_${key}`"><strong>{{ key }}.</strong> {{ option }}</label>
+                    </div>
+                </div>
+                
+                <!-- 反馈容器 -->
+                <div class="feedback-container" v-if="currentQuestion && (examState.isExamSubmitted || examState.confirmed.has(currentQuestionId))">
+                    <div :class="['feedback', isCurrentQuestionCorrect() ? 'correct' : 'incorrect']">
+                        <div class="feedback-title">{{ isCurrentQuestionCorrect() ? currentLanguage.examPage.feedback.correct : currentLanguage.examPage.feedback.incorrect }}</div>
+                        <div class="feedback-content">
+                            {{ isCurrentQuestionCorrect() ? currentLanguage.examPage.feedback.correctMessage : currentLanguage.examPage.feedback.incorrectMessage }}
+                            <div class="feedback-comparison">
+                                <div class="feedback-item"><strong>{{ currentLanguage.examPage.feedback.yourAnswer }}</strong> {{ getUserAnswerDisplay(currentQuestion.id) }}</div>
+                                <div class="feedback-item"><strong>{{ currentLanguage.examPage.feedback.correctAnswer }}</strong> {{ getCorrectAnswerDisplay(currentQuestion.correctAnswer) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 导航按钮 -->
+                <div class="nav-buttons">
+                    <button class="btn btn-primary" @click="prevQuestion" :disabled="currentQuestionIndex === 0">{{ currentLanguage.common.previous }}</button>
+                    <button class="btn btn-warning" @click="toggleMark" :disabled="!currentQuestionId || examState.isExamSubmitted">{{ currentLanguage.examPage.actionButtons.markCurrent }}</button>
+                    <button class="btn btn-warning" @click="confirmAnswer" :disabled="!currentQuestion || examState.isExamSubmitted">{{ currentLanguage.examPage.navButtons.confirmAnswer }}</button>
+                    <button class="btn btn-primary" @click="nextQuestion" :disabled="currentQuestionIndex === questionBank.length - 1">{{ currentLanguage.common.next }}</button>
+                </div>
+                <div class="retake-button-container" style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-danger" @click="retakeExam" v-show="examState.isExamSubmitted">{{ currentLanguage.examPage.navButtons.retakeExam }}</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 提交确认模态框 -->
+        <div class="modal" :class="{ 'show': submitModalVisible }">
+            <div class="modal-content">
+                <h3>{{ currentLanguage.examPage.modals.submission.title }}</h3>
+                <p>{{ currentLanguage.examPage.modals.submission.message }}</p>
+                <p>{{ currentLanguage.examPage.modals.submission.unanswered }}: {{ unansweredCount }}</p>
+                <div class="modal-buttons">
+                    <button class="btn btn-primary" @click="submitModalVisible = false">{{ currentLanguage.common.cancel }}</button>
+                    <button class="btn btn-danger" @click="submitExam">{{ currentLanguage.examPage.modals.submission.confirm }}</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 考试结果模态框 -->
+        <div class="modal" :class="{ 'show': resultModalVisible }">
+            <div class="modal-content">
+                <h3>{{ currentLanguage.examPage.modals.results.title }}</h3>
+                <p>{{ currentLanguage.examPage.modals.results.total }}: {{ questionBank.length }}</p>
+                <p>{{ currentLanguage.examPage.modals.results.correct }}: {{ examResults.correct }}</p>
+                <p>{{ currentLanguage.examPage.modals.results.incorrect }}: {{ examResults.incorrect }}</p>
+                <p>{{ currentLanguage.examPage.modals.results.unanswered }}: {{ examResults.unanswered }}</p>
+                <p>{{ currentLanguage.examPage.modals.results.score }}: {{ examResults.score }}%</p>
+                <div class="modal-buttons">
+                    <button class="btn btn-primary" @click="resultModalVisible = false">{{ currentLanguage.examPage.modals.results.confirm }}</button>
+                    <button class="btn btn-primary" @click="goToQuestionBank">{{ currentLanguage.examPage.modals.results.backToQuestionBank }}</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 重置考试确认模态框 -->
+        <div class="modal" :class="{ 'show': resetModalVisible }">
+            <div class="modal-content">
+                <h3>{{ currentLanguage.examPage.modals.reset.title }}</h3>
+                <p>{{ currentLanguage.examPage.modals.reset.message }}</p>
+                <div class="modal-buttons">
+                    <button class="btn btn-primary" @click="resetModalVisible = false">{{ currentLanguage.common.cancel }}</button>
+                    <button class="btn btn-danger" @click="resetExam">{{ currentLanguage.examPage.modals.reset.confirm }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                questionBank: [],
+                currentQuestionId: null,
+                examState: {
+                    answers: {},
+                    confirmed: new Set(),
+                    timeRemaining: 7200,
+                    timerInterval: null,
+                    isExamStarted: false,
+                    isExamSubmitted: false
+                },
+                markedQuestions: new Set(),
+                submitModalVisible: false,
+                resultModalVisible: false,
+                resetModalVisible: false,
+                examResults: {
+                    correct: 0,
+                    incorrect: 0,
+                    unanswered: 0,
+                    score: 0
+                },
+                unansweredCount: 0,
+                currentLang: 'zh',
+                loadError: null
+            },
+            computed: {
+                currentQuestionIndex() {
+                    return this.questionBank.findIndex(q => q.id === this.currentQuestionId);
+                },
+                currentQuestion() {
+                    return this.questionBank.find(q => q.id === this.currentQuestionId);
+                },
+                formattedTime() {
+                    const hours = Math.floor(this.examState.timeRemaining / 3600);
+                    const minutes = Math.floor((this.examState.timeRemaining % 3600) / 60);
+                    const seconds = this.examState.timeRemaining % 60;
+                    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                },
+                currentLanguage() {
+                    return languageResources[this.currentLang] || languageResources.zh;
+                },
+                currentQuestionAnswer: {
+                    get() {
+                        return this.currentQuestionId ? this.examState.answers[this.currentQuestionId] : undefined;
+                    },
+                    set(value) {
+                        if (this.currentQuestionId) {
+                            Vue.set(this.examState.answers, this.currentQuestionId, value);
+                        }
+                    }
+                }
+            },
+            methods: {
+                // 切换语言
+                switchLanguage() {
+                    // 更新页面语言属性
+                    document.documentElement.lang = this.currentLang;
+                    // 更新页面标题
+                    document.getElementById('pageTitle').textContent = this.currentLanguage.pageTitles.exam;
+                    // 保存语言偏好到localStorage
+                    localStorage.setItem('userLanguage', this.currentLang);
+                },
+                
+                // 验证题库数据
+                validateQuestionBank(questions) {
+                    if (!Array.isArray(questions)) return false;
+                    return questions.every(q => {
+                        return q.id && q.type && q.text && q.options && q.correctAnswer;
+                    });
+                },
+                
+                // 从localStorage加载题库
+                loadQuestionBank() {
+                    try {
+                        const savedQuestions = localStorage.getItem('examQuestionBank');
+                        if (!savedQuestions) {
+                            return;
+                        }
+
+                        const parsedQuestions = JSON.parse(savedQuestions);
+                        if (!this.validateQuestionBank(parsedQuestions)) {
+                            throw new Error('Invalid question bank format');
+                        }
+
+                        this.questionBank = parsedQuestions;
+                        
+                        if (this.questionBank.length > 0) {
+                            // 检查是否有正在进行的考试
+                            const isExamInProgress = localStorage.getItem('examInProgress');
+                            if (isExamInProgress === 'true') {
+                                // 有正在进行的考试，不启动新考试，保持当前状态
+                                // 如果currentQuestionId为空，设置为第一个题目的ID
+                                if (!this.currentQuestionId) {
+                                    this.currentQuestionId = this.questionBank[0].id;
+                                }
+                            } else {
+                                // 没有正在进行的考试，启动新考试
+                                this.startExam();
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Failed to load question bank:', e);
+                        // 创建一个用户友好的错误界面
+                        const questionContent = document.querySelector('.question-content');
+                        if (questionContent) {
+                            // 保存错误信息以便在模板中显示
+                            this.loadError = {
+                                message: e.message
+                            };
+                            // 使用Vue模板系统显示错误
+                            questionContent.innerHTML = `
+                                <div style="color: #e74c3c; padding: 15px; border: 1px solid #ffe3e3; border-radius: 4px;">
+                                    <p>Error loading question bank: ${e.message}</p>
+                                    <button class="btn btn-danger" onclick="app.clearCorruptedQuestionBank()">{{ currentLanguage.examPage.resetQuestionBank }}</button>
+                                </div>
+                            `;
+                        }
+                    }
+                },
+                
+                // 开始考试
+                startExam() {
+                    this.examState.isExamStarted = true;
+                    this.examState.isExamSubmitted = false;
+                    this.examState.answers = {};
+                    this.examState.confirmed = new Set();
+                    this.markedQuestions = new Set();
+                    this.examState.timeRemaining = 7200;
+                    this.examResults = {
+                        correct: 0,
+                        incorrect: 0,
+                        unanswered: 0,
+                        score: 0
+                    };
+                    
+                    // 为所有多选题预先初始化答案数组
+                    this.questionBank.forEach(question => {
+                        if (question.type === 'multiple') {
+                            Vue.set(this.examState.answers, question.id, []);
+                        }
+                    });
+                    
+                    // 清除之前的所有考试数据
+                    this.clearAnswersFromLocalStorage();
+                    localStorage.removeItem('examTimeRemaining');
+                    localStorage.setItem('examInProgress', 'true');
+                    
+                    if (this.questionBank.length > 0) {
+                        this.currentQuestionId = this.questionBank[0].id;
+                        this.startTimer();
+                    }
+                },
+                
+                // 将答案保存到localStorage
+                saveAnswersToLocalStorage() {
+                    try {
+                        localStorage.setItem('examAnswers', JSON.stringify(this.examState.answers));
+                    } catch (e) {
+                        console.error('Failed to save answers to localStorage:', e);
+                    }
+                },
+                
+                // 从localStorage加载答案
+                loadAnswersFromLocalStorage() {
+                    try {
+                        const savedAnswers = localStorage.getItem('examAnswers');
+                        if (savedAnswers) {
+                            const parsedAnswers = JSON.parse(savedAnswers);
+                            // 清空现有答案
+                            this.examState.answers = {};
+                            // 逐个设置答案，确保响应式
+                            for (const [questionId, answer] of Object.entries(parsedAnswers)) {
+                                Vue.set(this.examState.answers, questionId, answer);
+                            }
+                            // 确保所有多选题的答案都是数组
+                            this.questionBank.forEach(question => {
+                                if (question.type === 'multiple') {
+                                    if (!this.examState.answers[question.id] || !Array.isArray(this.examState.answers[question.id])) {
+                                        Vue.set(this.examState.answers, question.id, []);
+                                    }
+                                }
+                            });
+                        }
+                    } catch (e) {
+                        console.error('Failed to load answers from localStorage:', e);
+                        this.examState.answers = {};
+                    }
+                },
+                
+                // 清除localStorage中的答案
+                clearAnswersFromLocalStorage() {
+                    try {
+                        localStorage.removeItem('examAnswers');
+                    } catch (e) {
+                        console.error('Failed to clear answers from localStorage:', e);
+                    }
+                },
+                
+                // 开始计时器
+                startTimer() {
+                    if (this.examState.timerInterval) {
+                        clearInterval(this.examState.timerInterval);
+                    }
+                    
+                    this.updateTimerDisplay();
+                    
+                    this.examState.timerInterval = setInterval(() => {
+                        this.examState.timeRemaining--;
+                        
+                        // 保存剩余时间到localStorage
+                        localStorage.setItem('examTimeRemaining', this.examState.timeRemaining.toString());
+                        
+                        if (this.examState.timeRemaining <= 0) {
+                            clearInterval(this.examState.timerInterval);
+                            this.examState.timerInterval = null;
+                            localStorage.removeItem('examInProgress');
+                            localStorage.removeItem('examTimeRemaining');
+                            this.submitExam();
+                            return;
+                        }
+                        
+                        this.updateTimerDisplay();
+                    }, 1000);
+                },
+                
+                // 更新计时器显示
+                updateTimerDisplay() {
+                    // 这个方法在Vue中不再需要，因为有computed属性formattedTime
+                },
+                
+                // 切换题目
+                switchQuestion(questionId) {
+                    console.log('switchQuestion - from currentQuestionId:', this.currentQuestionId, 'to:', questionId);
+                    console.log('switchQuestion - examState.answers before:', JSON.stringify(this.examState.answers));
+                    
+                    // 先保存当前题目的答案（虽然v-model会自动处理，但增加此步骤确保数据完整性）
+                    const previousAnswer = this.currentQuestionAnswer;
+                    if (this.currentQuestionId) {
+                        Vue.set(this.examState.answers, this.currentQuestionId, previousAnswer);
+                    }
+                    
+                    this.currentQuestionId = questionId;
+                    // 确保当前题目的答案已初始化
+                    const currentQuestion = this.questionBank.find(q => q.id === questionId);
+                    if (currentQuestion && currentQuestion.type === 'multiple') {
+                        if (!this.examState.answers[questionId] || !Array.isArray(this.examState.answers[questionId])) {
+                            Vue.set(this.examState.answers, questionId, []);
+                        }
+                    }
+                    
+                    console.log('switchQuestion - examState.answers after:', JSON.stringify(this.examState.answers));
+                    console.log('switchQuestion - currentQuestion:', JSON.stringify(currentQuestion));
+                },
+                
+                // 上一题
+                prevQuestion() {
+                    if (this.currentQuestionIndex > 0) {
+                        const prevQuestionId = this.questionBank[this.currentQuestionIndex - 1].id;
+                        this.switchQuestion(prevQuestionId);
+                    }
+                },
+                
+                // 下一题
+                nextQuestion() {
+                    if (this.currentQuestionIndex < this.questionBank.length - 1) {
+                        const nextQuestionId = this.questionBank[this.currentQuestionIndex + 1].id;
+                        this.switchQuestion(nextQuestionId);
+                    }
+                },
+                
+                // 选择选项 - 处理点击div时的选择逻辑
+                selectOption(key) {
+                    if (!this.currentQuestionId || this.examState.isExamSubmitted) return;
+                    
+                    // 直接从questionBank获取当前题目，确保使用最新信息
+                    const question = this.questionBank.find(q => q.id === this.currentQuestionId);
+                    if (!question) return;
+                    
+                    console.log('selectOption - currentQuestionId:', this.currentQuestionId);
+                    console.log('selectOption - question:', question);
+                    console.log('selectOption - key:', key);
+                    console.log('selectOption - examState.answers before:', JSON.stringify(this.examState.answers));
+                    
+                    if (question.type === 'single') {
+                        // 直接使用计算属性设置单选答案
+                        this.currentQuestionAnswer = key;
+                    } else {
+                        // 获取当前答案数组的副本，确保响应式更新
+                        let currentAnswers = [...(this.currentQuestionAnswer || [])];
+                        
+                        // 直接操作当前题目的答案数组
+                        const index = currentAnswers.indexOf(key);
+                        if (index > -1) {
+                            // 移除选项
+                            currentAnswers.splice(index, 1);
+                        } else {
+                            // 添加选项
+                            currentAnswers.push(key);
+                        }
+                        
+                        // 更新答案数组，确保触发响应式更新
+                        this.currentQuestionAnswer = currentAnswers;
+                    }
+                    
+                    console.log('selectOption - examState.answers after:', JSON.stringify(this.examState.answers));
+                    
+                    // 保存答案到localStorage
+                    this.saveAnswersToLocalStorage();
+                },
+                
+                // 判断选项是否选中
+                isOptionSelected(key) {
+                    const currentAnswer = this.currentQuestionAnswer;
+                    if (this.currentQuestion?.type === 'single') {
+                        return currentAnswer != null && currentAnswer === key;
+                    } else {
+                        return Array.isArray(currentAnswer) && currentAnswer.includes(key);
+                    }
+                },
+                
+                // 判断选项是否正确
+                isOptionCorrect(key) {
+                    if (!this.currentQuestion) return false;
+                    if (this.currentQuestion.type === 'single') {
+                        return this.currentQuestion.correctAnswer === key;
+                    } else {
+                        return this.currentQuestion.correctAnswer.includes(key);
+                    }
+                },
+                
+                // 判断题目是否已回答
+                isAnswered(questionId) {
+                    const answer = this.examState.answers[questionId];
+                    const question = this.questionBank.find(q => q.id === questionId);
+                    if (!question) return false;
+                    return (question.type === 'single' && answer !== undefined) ||
+                           (question.type === 'multiple' && Array.isArray(answer) && answer.length > 0);
+                },
+                
+                // 判断题目是否正确
+                isCorrect(questionId) {
+                    const question = this.questionBank.find(q => q.id === questionId);
+                    if (!question) return false;
+                    const answer = this.examState.answers[questionId];
+                    if (answer === undefined) return false;
+                    
+                    if (question.type === 'single') {
+                        return answer === question.correctAnswer;
+                    } else {
+                        return JSON.stringify(answer.sort()) === JSON.stringify(question.correctAnswer.sort());
+                    }
+                },
+                
+                // 判断当前题目是否正确
+                isCurrentQuestionCorrect() {
+                    return this.currentQuestionId ? this.isCorrect(this.currentQuestionId) : false;
+                },
+                
+                // 切换标记
+                toggleMark() {
+                    if (!this.currentQuestionId) return;
+                    
+                    if (this.markedQuestions.has(this.currentQuestionId)) {
+                        this.markedQuestions.delete(this.currentQuestionId);
+                    } else {
+                        this.markedQuestions.add(this.currentQuestionId);
+                    }
+                },
+                
+                // 确认答案
+                confirmAnswer() {
+                    if (!this.currentQuestionId || !this.examState.isExamStarted || this.examState.isExamSubmitted) {
+                        return;
+                    }
+                    
+                    if (!this.isAnswered(this.currentQuestionId)) {
+                        alert(this.currentLanguage.examPage.selectAnswerWarning)
+                        return;
+                    }
+                    
+                    this.examState.confirmed.add(this.currentQuestionId);
+                },
+                
+                // 打开提交模态框
+                openSubmitModal() {
+                    this.calculateUnanswered();
+                    this.submitModalVisible = true;
+                },
+                
+                // 计算未回答题目数量
+                calculateUnanswered() {
+                    this.unansweredCount = 0;
+                    this.questionBank.forEach(question => {
+                        const answer = this.examState.answers[question.id];
+                        const isUnanswered = (question.type === 'single' && answer === undefined) || 
+                                            (question.type === 'multiple' && (!Array.isArray(answer) || answer.length === 0));
+                        
+                        if (isUnanswered) {
+                            this.unansweredCount++;
+                        }
+                    });
+                },
+                
+                // 提交考试
+                submitExam() {
+                    this.submitModalVisible = false;
+                    
+                    if (this.examState.timerInterval) {
+                        clearInterval(this.examState.timerInterval);
+                        this.examState.timerInterval = null;
+                    }
+                    
+                    // 清除localStorage中的考试状态和时间
+                    localStorage.removeItem('examInProgress');
+                    localStorage.removeItem('examTimeRemaining');
+                    
+                    this.examState.isExamSubmitted = true;
+                    
+                    this.calculateResults();
+                    this.resultModalVisible = true;
+                },
+                
+                // 计算考试结果
+                calculateResults() {
+                    let correctCount = 0;
+                    let wrongCount = 0;
+                    let unansweredCount = 0;
+                    
+                    this.questionBank.forEach(question => {
+                        const answer = this.examState.answers[question.id];
+                        
+                        if (answer === undefined || (question.type === 'multiple' && (!Array.isArray(answer) || answer.length === 0))) {
+                            unansweredCount++;
+                        } else {
+                            let isCorrect = false;
+                            if (question.type === 'single') {
+                                isCorrect = answer === question.correctAnswer;
+                            } else {
+                                isCorrect = JSON.stringify(answer.sort()) === JSON.stringify(question.correctAnswer.sort());
+                            }
+                            
+                            if (isCorrect) {
+                                correctCount++;
+                            } else {
+                                wrongCount++;
+                            }
+                        }
+                    });
+                    
+                    this.examResults = {
+                        correct: correctCount,
+                        incorrect: wrongCount,
+                        unanswered: unansweredCount,
+                        score: this.questionBank.length > 0 ? Math.round((correctCount / this.questionBank.length) * 100) : 0
+                    };
+                },
+                
+                // 返回题库
+                goToQuestionBank() {
+                    this.resultModalVisible = false;
+                    window.location.href = 'question-bank2.html';
+                },
+                
+                // 重新考试
+                retakeExam() {
+                    this.resultModalVisible = false;
+                    
+                    if (this.examState.timerInterval) {
+                        clearInterval(this.examState.timerInterval);
+                    }
+                    
+                    this.startExam();
+                },
+                
+                // 打开重置模态框
+                openResetModal() {
+                    this.resetModalVisible = true;
+                },
+                
+                // 重置考试
+                resetExam() {
+                    this.resetModalVisible = false;
+                    
+                    if (this.examState.timerInterval) {
+                        clearInterval(this.examState.timerInterval);
+                    }
+                    
+                    localStorage.removeItem('examInProgress');
+                    this.startExam();
+                },
+                
+                // 获取用户答案显示
+                getUserAnswerDisplay(questionId) {
+                    const question = this.questionBank.find(q => q.id === questionId);
+                    if (!question) return this.currentLanguage.examPage.unanswered;
+                    const answer = this.examState.answers[questionId];
+                    if (!answer || (question.type === 'multiple' && answer.length === 0)) return this.currentLanguage.examPage.unanswered;
+                    return Array.isArray(answer) ? answer.join(', ') : answer;
+                },
+                
+                // 获取正确答案显示
+                getCorrectAnswerDisplay(correctAnswer) {
+                    return Array.isArray(correctAnswer) ? correctAnswer.join(', ') : correctAnswer;
+                },
+                
+                // 清除损坏的题库数据
+                clearCorruptedQuestionBank() {
+                    if (confirm(this.currentLanguage.examPage.clearCorruptedWarning)) {
+                        localStorage.removeItem('examQuestionBank');
+                        location.reload(); // 重新加载页面
+                    }
+                }
+            },
+            mounted() {
+                // 加载用户语言偏好
+                const savedLang = localStorage.getItem('userLanguage');
+                if (savedLang) {
+                    this.currentLang = savedLang;
+                }
+                // 更新页面语言属性
+                document.documentElement.lang = this.currentLang;
+                // 更新页面标题
+                document.getElementById('pageTitle').textContent = this.currentLanguage.pageTitles.exam;
+                // 加载题库
+                this.loadQuestionBank();
+                // 加载保存的答案
+                this.loadAnswersFromLocalStorage();
+                
+                // 检查是否有正在进行的考试
+                const isExamInProgress = localStorage.getItem('examInProgress');
+                if (isExamInProgress === 'true') {
+                    // 恢复考试状态
+                    this.examState.isExamStarted = true;
+                    this.examState.isExamSubmitted = false;
+                    
+                    // 加载保存的剩余时间
+                    const savedTimeRemaining = localStorage.getItem('examTimeRemaining');
+                    if (savedTimeRemaining) {
+                        this.examState.timeRemaining = parseInt(savedTimeRemaining, 10);
+                    }
+                    
+                    // 重新开始计时器
+                    this.startTimer();
+                }
+            },
+            beforeDestroy() {
+                if (this.examState.timerInterval) {
+                    clearInterval(this.examState.timerInterval);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
