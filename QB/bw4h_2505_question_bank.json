@@ -345,7 +345,7 @@
       "C": "To protect a variable using an authorization object",
       "D": "To provide an analysis authorization with dynamic values"
     },
-    "correctAnswer": "D"
+    "correctAnswer": "B"
   },
   {
     "id": "1765781859762",
@@ -769,7 +769,7 @@
     },
     "correctAnswer": [
       "B",
-      "C",
+      "D",
       "E"
     ]
   },
