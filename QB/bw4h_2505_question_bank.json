@@ -1,0 +1,1169 @@
+[
+  {
+    "id": "1765684478560856",
+    "type": "single",
+    "text": "Where is the button that automatically generates a process chain?",
+    "options": {
+      "A": "In the app called Process Chain Editor",
+      "B": "In the editor of a data transfer process",
+      "C": "In the SAP GUI transaction for Process Chain Maintenance",
+      "D": "In the editor of a data flow object"
+    },
+    "correctAnswer": "D"
+  },
+  {
+    "id": "1765684478560223",
+    "type": "multiple",
+    "text": "How does SAP position SAP Datasphere in supporting business users? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Business users can create agile models from different sources.",
+      "B": "Business users can leverage embedded analytic Fiori apps for data analysis.",
+      "C": "Business users can allocate system resources without IT involvement.",
+      "D": "Business users can create restricted calculated columns based on existing models.",
+      "E": "Business users can upload their own CSV files."
+    },
+    "correctAnswer": [
+      "A",
+      "D",
+      "E"
+    ]
+  },
+  {
+    "id": "1765684478560114",
+    "type": "single",
+    "text": "Which layer of the layered scalable architecture (LSA++) of SAP BW/4HANA is designed as the main storage for harmonized consistent data?",
+    "options": {
+      "A": "Open Operational Data Store Layer",
+      "B": "Data Acquisition Layer",
+      "C": "Flexible Enterprise Data Warehouse Core Layer",
+      "D": "Virtual Data Mart Layer"
+    },
+    "correctAnswer": "C"
+  },
+  {
+    "id": "1765684478560328",
+    "type": "single",
+    "text": "What is the maximum number of reference characteristics that can be used for one key figure with a Multi-dimensional exception aggregation in a BW query?",
+    "options": {
+      "A": "10",
+      "B": "7",
+      "C": "5",
+      "D": "3"
+    },
+    "correctAnswer": "C"
+  },
+  {
+    "id": "1765684478560151",
+    "type": "single",
+    "text": "You have already loaded data from a non-SAP system into SAP Datasphere. You want to federate this data with data from an InfoCube of your SAP BW powered by SAP HANA. \nWhat do you need to use to combine the data?",
+    "options": {
+      "A": "SAP ABAP Connection",
+      "B": "SAP BW Shell Migration",
+      "C": "SAP BW Remote Migration",
+      "D": "SAP BW/4HANA Model Transfer"
+    },
+    "correctAnswer": "A"
+  },
+  {
+    "id": "1765684478560152",
+    "type": "single",
+    "text": "For a BW query you want to have the first month of the current quarter as a default value for an Input-ready BW variable for the characteristic 0CALMONTH.\nWhich processing type do you use?",
+    "options": {
+      "A": "Manual Input with offset value",
+      "B": "Replacement Path",
+      "C": "Customer Exit",
+      "D": "Manual Input with default value"
+    },
+    "correctAnswer": "C"
+  },
+  {
+    "id": "1765688170490",
+    "type": "multiple",
+    "text": "Which source types are available to create a generic DataSource in SAP ERP? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "ABAP class method",
+      "B": "SAP query",
+      "C": "ABAP managed database procedure",
+      "D": "ABAP function module",
+      "E": "Database view"
+    },
+    "correctAnswer": [
+      "B",
+      "D",
+      "E"
+    ]
+  },
+  {
+    "id": "1765689992589",
+    "type": "multiple",
+    "text": "Which recommendations should you follow to optimize BW query performance? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Create linked components.",
+      "B": "Include fewer drill-down characteristics in the initial view.",
+      "C": "Use mandatory characteristic value variables.",
+      "D": "Use the include mode within filter restrictions.",
+      "E": "Use the dereference option for reusable filters."
+    },
+    "correctAnswer": [
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765712759207",
+    "type": "multiple",
+    "text": "Which SAP solutions can leverage the Write Interface for DataStore objects(advanced) to push data into the inbound table of DataStore objects(advanced)? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "SAP Process Integration",
+      "B": "SAP Landscape Transformation Replication Server",
+      "C": "SAP Data Services",
+      "D": "SAP Datasphere"
+    },
+    "correctAnswer": [
+      "A",
+      "C"
+    ]
+  },
+  {
+    "id": "1765716279099",
+    "type": "multiple",
+    "text": "How can the delta merge process be initiated in SAP BW/4HANA? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "By using a specific process type in a process chain",
+      "B": "By using the SAP BW/4HANA data load monitor",
+      "C": "By setting a specific flag in the transformation",
+      "D": "By setting a specific flag in the data transfer process"
+    },
+    "correctAnswer": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "id": "1765717644331",
+    "type": "single",
+    "text": "In SAP Web IDE for SAP HANA you have imported a project including an HDB module with calculation views. \nWhat do you need to do in the project settings before you can successfully build the HDB module?",
+    "options": {
+      "A": "Define a package.",
+      "B": "Generate the HDI container.",
+      "C": "Assign a space.",
+      "D": "Change the schema name."
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": "1765718466048",
+    "type": "single",
+    "text": "Which feature of a DataStore object(advanced) should be made available to improve the performance for data analysis?",
+    "options": {
+      "A": "Snapshot Support",
+      "B": "Partitioning",
+      "C": "Inventory Management",
+      "D": "Changelog"
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": "1765719294070",
+    "type": "single",
+    "text": "A user has the analysis authorization for the Controlling Areas 1000 2000. In the InfoProvider there are records for Controlling Areas 1000 2000 3000 4000. The user starts a Data preview on the InfoProvider.\nWhich data will be displayed?",
+    "options": {
+      "A": "Data for Controlling Areas 1000 2000",
+      "B": "No data for any of the Controlling Areas",
+      "C": "Only the aggregated total of all Controlling Areas",
+      "D": "Data for Controlling Areas 1000 2000 the aggregated total of 3000 4000"
+    },
+    "correctAnswer": "A"
+  },
+  {
+    "id": "1765719533082",
+    "type": "single",
+    "text": "Why do you set the Read Access Type to \"SAP HANA View\" in an SAP BW/4HANA InfoObject?",
+    "options": {
+      "A": "To enable parallel loading of master data texts",
+      "B": "To use the InfoObject as an association within an Open ODS view",
+      "C": "To generate an SAP HANA calculation view data category Dimension",
+      "D": "To report master data attributes which are defined in calculation views"
+    },
+    "correctAnswer": "C"
+  },
+  {
+    "id": "1765720450754",
+    "type": "single",
+    "text": "Your company manufactures products with country-specific serial numbers. For this scenario you have created 3 custom characteristics with the technical names \"PRODUCT\" \"COUNTRY\" \"SERIAL_NO\".\nHow do you need to model the characteristic \"PRODUCT\" to store different attribute values for serial numbers?",
+    "options": {
+      "A": "Use \"COUNTRY\" as a navigation attribute for \"PRODUCT\"",
+      "B": "Use \"SERIAL_NO\" as a transitive attribute for \"PRODUCT\"",
+      "C": "Use \"COUNTRY\" as a compounding characteristic for \"PRODUCT\"",
+      "D": "Use \"SERIAL_NO\" as a compounding characteristic for \"PRODUCT\""
+    },
+    "correctAnswer": "D"
+  },
+  {
+    "id": "1765720721217",
+    "type": "single",
+    "text": "You need to derive an architecture overview model from a key figure matrix.\nWhich is the first step you need to take?",
+    "options": {
+      "A": "Identify transformations",
+      "B": "Identify sources",
+      "C": "Analyze storage requirements",
+      "D": "Define data marts"
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": "1765720973256",
+    "type": "single",
+    "text": "Which type of data builder object can be used to fetch delta data from a remote table located in the SAP BW Bridge space?",
+    "options": {
+      "A": "Transformation Flow",
+      "B": "Entity relationship model",
+      "C": "Replication Flow",
+      "D": "Data Flow"
+    },
+    "correctAnswer": "A"
+  },
+  {
+    "id": "1765764143171",
+    "type": "multiple",
+    "text": "What are prerequisites for S-API Extractors to load data directly into SAP Datasphere core tenant using delta mode? Note: There are 2 correct answers to this quesiton.",
+    "options": {
+      "A": "Real-time access needs to be enabled",
+      "B": "A primary key needs to exist",
+      "C": "Extractor must be based on a function module",
+      "D": "Operational Data Provisioning (ODP) must be enabled"
+    },
+    "correctAnswer": [
+      "B",
+      "D"
+    ]
+  },
+  {
+    "id": "1765768157566",
+    "type": "single",
+    "text": "In which ODP context is the operational delta queue(ODQ) managed by the target system?",
+    "options": {
+      "A": "ODP_BW",
+      "B": "ODP_SAP",
+      "C": "ODP_CDS",
+      "D": "ODP_HANA"
+    },
+    "correctAnswer": "D"
+  },
+  {
+    "id": "1765768410635",
+    "type": "single",
+    "text": "Which entity can be used as a source of an Analytic Model?",
+    "options": {
+      "A": "Business entities of semantic type Dimension",
+      "B": "Views of semantic type Fact",
+      "C": "Tables of semantic type Hierarchy",
+      "D": "Remote tables of semantic type Text"
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": "1765780394435",
+    "type": "single",
+    "text": "Which request-based deletion is possible in a DataMart DataStore object?",
+    "options": {
+      "A": "Only the most recent request in the active data table",
+      "B": "Any non-activated request in the inbound table",
+      "C": "Only the most recent non-activated request in the inbound table",
+      "D": "Any request in the active data table"
+    },
+    "correctAnswer": "C"
+  },
+  {
+    "id": "1765780622954",
+    "type": "single",
+    "text": "For InfoObject \"ADDRESS\" the High Cardinality flag has been set. However \"ADDRESS\" has an attribute \"CITY\" without the High Cardinality flag. \nWhat is the effect on SID values in this scenario?",
+    "options": {
+      "A": "SID values are not stored for InfoObject \"ADDRESS\".",
+      "B": "SID values are generated when InfoObject \"CITY\" is activated.",
+      "C": "SID values are generated when InfoObject \"ADDRESS\" is activated.",
+      "D": "SID values are generated when data for InfoObject \"ADDRESS\" is loaded."
+    },
+    "correctAnswer": "D"
+  },
+  {
+    "id": "1765780776370",
+    "type": "single",
+    "text": "Which development object needs to be built to generate an HDI Container?",
+    "options": {
+      "A": "Space",
+      "B": "HDB module",
+      "C": "Package",
+      "D": "SQL script procedure"
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": "1765781112762",
+    "type": "single",
+    "text": "You consider using the feature Snapshot Support for a Standard DataStore object.\nWhich data management process may be slower with this feature than without it?",
+    "options": {
+      "A": "Selective Data Deletion",
+      "B": "Delete request from the inbound table",
+      "C": "Filling the Inbound Table",
+      "D": "Activating Data"
+    },
+    "correctAnswer": "A"
+  },
+  {
+    "id": "1765781282051",
+    "type": "single",
+    "text": "How can you protect all InfoProviders against displaying their data?",
+    "options": {
+      "A": "By flagging all InfoProviders as authorization-relevant",
+      "B": "By flagging the characteristic 0TCAIPROV as authorization-relevant",
+      "C": "By flagging all InfoAreas as authorization-relevant",
+      "D": "By flagging the characteristic 0INFOPROV as authorization-relevant"
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": "1765781461628",
+    "type": "single",
+    "text": "While running a query insufficient analysis authorization causes an error message.\nWhich transaction can be used to trace the missing authorization for the specific characteristic Values?",
+    "options": {
+      "A": "Transaction ST01",
+      "B": "Transaction RSUDO",
+      "C": "Transaction STAUTHTRACE",
+      "D": "Transaction SU53"
+    },
+    "correctAnswer": "C"
+  },
+  {
+    "id": "1765781586618",
+    "type": "single",
+    "text": "Why do you use an authorization variable?",
+    "options": {
+      "A": "To provide dynamic values for the authorization object S_RS_COMP",
+      "B": "To filter a query based on the authorized values",
+      "C": "To protect a variable using an authorization object",
+      "D": "To provide an analysis authorization with dynamic values"
+    },
+    "correctAnswer": "D"
+  },
+  {
+    "id": "1765781859762",
+    "type": "single",
+    "text": "What foundation is necessary to use SAP S/4HANA embedded analytics?",
+    "options": {
+      "A": "SAP HANA optimized business content",
+      "B": "ABAP CDS view based virtual data model",
+      "C": "Generated external SAP HANA Calculation Views",
+      "D": "SAP Agile Data Preparation"
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": "1765782058659",
+    "type": "single",
+    "text": "You created a generic DataSource in SAP ERP but did not release the DataSource for Operational Data Provisioning(ODP).\nWhat is the effect in SAP BW/4HANA?",
+    "options": {
+      "A": "The ODP DataSource can be generated using the Data Flow generation feature",
+      "B": "The ODP DataSource has to be created using the ODP_HANA source system type",
+      "C": "DataSource cannot be replicated using the ODP_SAP source system type",
+      "D": "The ODP DataSource has to be created using the ODP_SAP source system type"
+    },
+    "correctAnswer": "C"
+  },
+  {
+    "id": "1765782176195",
+    "type": "single",
+    "text": "You would like to highlight the deviation from predefined threshold values for a key figure visualize it in SAP Analysis for Microsoft Office.\nWhich BW query feature do you use?",
+    "options": {
+      "A": "Formula cell",
+      "B": "Exception",
+      "C": "Key figure property",
+      "D": "Condition"
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": "1765782322635",
+    "type": "single",
+    "text": "For which use case would you need to model a transitive attribute?",
+    "options": {
+      "A": "Generate a transient provider for a BW query on master data attributes",
+      "B": "Store time-dependent snapshots of master data attributes",
+      "C": "Load attributes using the enhanced master data update",
+      "D": "Report on navigational attributes of navigational attributes"
+    },
+    "correctAnswer": "D"
+  },
+  {
+    "id": "1765782518387",
+    "type": "multiple",
+    "text": "Where can you assign analysis authorizations? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "In transaction RSECADMIN directly to a user",
+      "B": "In transaction PFCG to a role using the authorization object S_RS_AO",
+      "C": "In transaction SU01 directly to a user",
+      "D": "In transaction PFCG to a role using the authorization object S_RS_AUTH"
+    },
+    "correctAnswer": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "id": "1765782725404",
+    "type": "multiple",
+    "text": "You use InfoObject B as a display attribute for InfoObject A.\nWhich object properties prevent you from changing InfoObject B into a navigational attribute for InfoObject A? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Data Type \"Character String\" is set in InfoObject A",
+      "B": "Attribute Only is set in InfoObject B",
+      "C": "High Cardinality is set in InfoObject B",
+      "D": "InfoObject B is defined as a Key Figure",
+      "E": "Conversion Routine \"ALPHA\" is set in InfoObject A"
+    },
+    "correctAnswer": [
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765783121636",
+    "type": "multiple",
+    "text": "InfoObject \"CITY\" is defined as a display attribute for InfoObject \"CUSTOMER\" InfoObject \"COUNTRY\" is defined as a display attribute for InfoObject \"CITY\". In a master data report you want to display the \"COUNTRY\" of a \"CUSTOMER\".\nWhich options do you have to realize this scenario? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Include \"CUSTOMER\" to the rows in the BW query on \"CUSTOMER\" activate the Universal Display Hierarchy setting",
+      "B": "Generate external views for \"CUSTOMER\" \"CITY\" \"COUNTRY\" join them in another calculation view",
+      "C": "Combine \"CUSTOMER\" \"CITY\" \"COUNTRY\" in a Composite Provider using a sequence of left outer join operators",
+      "D": "Add \"COUNTRY\" as a transitive attribute for \"CUSTOMER\" in InfoObject definition",
+      "E": "Combine \"CUSTOMER\" \"CITY\" \"COUNTRY\" in an Open ODS View using a sequence of associations"
+    },
+    "correctAnswer": [
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765783575006",
+    "type": "multiple",
+    "text": "What are some of the prerequisites for using SAP S/4HANA ABAP CDS views for extraction into SAP BW/4HANA in an ODP context? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "The ABAP CDS views must be released through the program RODPS_OS_EXPOSE for BW extraction",
+      "B": "The Operational Data Provisioning Framework must be configured in SAP BW/4HANA",
+      "C": "An ODP source system with context ODP_CDS must be created in SAP BW/4HANA",
+      "D": "The ABAP CDS Views must be defined with the appropriate data extraction annotations"
+    },
+    "correctAnswer": [
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765784024101",
+    "type": "multiple",
+    "text": "In SAP BW/4HANA a query has been defined on a Datastore Object(advanced).\nWhich authorizations does an SAP BW/4HANA user need at minimum to change the query definition? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Authorizations for the Authorization Object S_RS_COMP",
+      "B": "Authorizations for the Authorization Object S_RS_AUTH",
+      "C": "Authorizations for the Authorization Object S_RS_COMP1",
+      "D": "Authorizations for the Authorization Object S_RS_ADSO"
+    },
+    "correctAnswer": [
+      "A",
+      "C"
+    ]
+  },
+  {
+    "id": "1765785007974",
+    "type": "multiple",
+    "text": "You create an SAP HANA HDI Calculation View.\nWhat are some of the reasons to choose the data category Cube with Star Join instead of data category Dimension? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "You can combine master data transactional data",
+      "B": "You can persist transactional data",
+      "C": "You can provide default time characteristics",
+      "D": "You can create restricted columns",
+      "E": "You can aggregate measures as a sum"
+    },
+    "correctAnswer": [
+      "A",
+      "C",
+      "E"
+    ]
+  },
+  {
+    "id": "1765786511118",
+    "type": "multiple",
+    "text": "Which external hierarchy properties can be changed in the query definition? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Position of child nodes",
+      "B": "Sort direction",
+      "C": "Expend to level",
+      "D": "Display text nodes",
+      "E": "Time dependency"
+    },
+    "correctAnswer": [
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765786755751",
+    "type": "multiple",
+    "text": "Which are use cases for sharing an object? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "A product dimension view should be used in different fact models for different business segments",
+      "B": "A BW time characteristic should be used across multiple DataStore objects(advanced)",
+      "C": "A source connection needs to be used in different replication flows",
+      "D": "Time tables are defined in a central space should be used in many other spaces",
+      "E": "Use remote tables located in the SAP BW bridge space across SAP Datasphere core spaces"
+    },
+    "correctAnswer": [
+      "A",
+      "D",
+      "E"
+    ]
+  },
+  {
+    "id": "1765787544415",
+    "type": "multiple",
+    "text": "Which options do you have to combine data from SAP BW bridge a customer space in SAP Datasphere Core? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "• Import SAP BW bridge objects to the SAP BW bridge space \n• Share the generated remote tables with the customer space \n• Create additional views in the customer space to combine data",
+      "B": "• Import SAP BW bridge objects to the customer space \n• Create additional views in the customer space to combine data",
+      "C": "• Import SAP BW bridge objects to the SAP BW bridge space \n• Create additional views in the customer space \n• Share the created views with the SAP BW bridge space to combine data",
+      "D": "• Import objects from the customer space to the SAP BW bridge space \n• Create additional views in the SAP BW bridge space to combine data"
+    },
+    "correctAnswer": [
+      "A",
+      "B"
+    ]
+  },
+  {
+    "id": "1765788445328",
+    "type": "multiple",
+    "text": "The behavior of a modeled dataflow depends on:\n\t• The DataSource with its Delta Management method\n\t• The type of the DataStore object(advanced) used as a target\n\t• The update method of the key figures in the transformation\nWhich of the following combinations provides consistent information for the target? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "• DataSource with Delta Management method ADD • DataStore Object(advanced) type Standard • Update method Move",
+      "B": "• DataSource with Delta Management method ABR • DataStore Object (advanced) type Stard • Update method Summation",
+      "C": "• DataSource with Delta Management method ABR • DataStore Object (advanced) type Stard • Update method Move",
+      "D": "• DataSource with Delta Management method ABR • DataStore Object (advanced) type Data Mart • Update method Summation",
+      "E": "• DataSource with Delta Management method AIE • DataStore Object (advanced) type Data Mart • Update method Summation"
+    },
+    "correctAnswer": [
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765788676544",
+    "type": "multiple",
+    "text": "You notice that an SAP ERP ODP_SAP DataSource is delivering incorrect values into the first persistent data layer in SAP BW/4HANA. Which options do you have to analyze a potential extractor issue? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Use the program RODPS_REPL_TEST in SAP ERP.",
+      "B": "Use the transaction ODQMON (Monitor Delta Queues) in SAP BW/4HANA.",
+      "C": "Use the transaction RSA3 (Extractor checker) in SAP ERP.",
+      "D": "Check entries in the table RSDDSTATEXTRACT in SAP ERP."
+    },
+    "correctAnswer": [
+      "A",
+      "C"
+    ]
+  },
+  {
+    "id": "1765789057967",
+    "type": "multiple",
+    "text": "Which tasks require access to the BW bridge cockpit? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Create transport requests",
+      "B": "Set up Software components",
+      "C": "Create source systems",
+      "D": "Create communication systems"
+    },
+    "correctAnswer": [
+      "B",
+      "D"
+    ]
+  },
+  {
+    "id": "1765789227224",
+    "type": "multiple",
+    "text": "You created an Open ODS view of type Facts. With which object types can you associate a field in the Characteristics folder? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Open ODS view of type Master Data",
+      "B": "InfoObject of type Characteristic",
+      "C": "Open ODS view of type Facts",
+      "D": "HDI Calculation View of data category Dimension"
+    },
+    "correctAnswer": [
+      "A",
+      "B"
+    ]
+  },
+  {
+    "id": "1765789450881",
+    "type": "multiple",
+    "text": "What are the prerequisites for deleting business partner attribute master data in SAP BW/4HANA? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "There must be no BW query as InfoProvider in SAP BW/4HANA that uses business partner as a free characteristic.",
+      "B": "In SAP BW/4HANA there must be no hierarchy data related to business partner values that should be deleted.",
+      "C": "There must be no transaction data in a DataStore Object (advanced) referring to business partner values that should be deleted.",
+      "D": "In SAP BW/4HANA there must be no analysis authorizations related to business partner values that should be deleted"
+    },
+    "correctAnswer": [
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765789773689",
+    "type": "multiple",
+    "text": "An upper-level CompositeProvider compares current values with historic values based on a union operation. The current values are provided by a DataStore object (advanced) that is updated daily. Historic values are provided by a lower-level CompositeProvider that combines different open ODS views from DataSources.\nWhat can you do to improve the performance of the BW queries that use the upper-level CompositeProvider? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Replace the lower-level CompositeProvider with a new DataStore object (advanced) fill it with the same combination of historic data.",
+      "B": "Use a join node instead of the Union node in the upper-level CompositeProvider.",
+      "C": "Replace the DataStore object (advanced) for current data by an Open ODS view that accesses the current data directly from the source system.",
+      "D": "Use the \"Generate Dataflow\" feature for the Open ODS views load the historic data to the new generated DataStore objects (advanced)."
+    },
+    "correctAnswer": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "id": "1765790035680",
+    "type": "multiple",
+    "text": "What are some of the variable types in a BW query that can use the processing type SAP HANA Exit? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Hierarchy node",
+      "B": "Formula",
+      "C": "Text",
+      "D": "Characteristic value"
+    },
+    "correctAnswer": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "id": "1765790436074",
+    "type": "multiple",
+    "text": "Which of the following are possible delta-specific fields for a generic DataSource in SAP S/4HANA? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Calendar day",
+      "B": "Request ID",
+      "C": "Numeric pointer",
+      "D": "Record mode",
+      "E": "Time stamp"
+    },
+    "correctAnswer": [
+      "A",
+      "C",
+      "E"
+    ]
+  },
+  {
+    "id": "1765796658315",
+    "type": "multiple",
+    "text": "What are the benefits of separating master data from transactional data in SAP BW/4HANA? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Reducing the number of database tables",
+      "B": "Allowing different data load frequency",
+      "C": "Ensuring referential integrity of your transactional data",
+      "D": "Providing language-dependent master data texts",
+      "E": "Avoiding generation of SID values"
+    },
+    "correctAnswer": [
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765796786773",
+    "type": "multiple",
+    "text": "In a BW query with cells you need to overwrite the initial definition of a cell. Which cell types can you use? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Reference cell",
+      "B": "Formula cell",
+      "C": "Selection cell",
+      "D": "Help cell"
+    },
+    "correctAnswer": [
+      "B",
+      "C"
+    ]
+  },
+  {
+    "id": "1765796992265",
+    "type": "multiple",
+    "text": "What are the reasons for implementing Composite Providers? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "To persist combined data for reporting",
+      "B": "To directly expose an SAP HANA table from an external schema",
+      "C": "To provide an interface for using BW queries",
+      "D": "To provide a virtual data mart layer that combines existing BW models"
+    },
+    "correctAnswer": [
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765797241734",
+    "type": "multiple",
+    "text": "Which of the following factors apply to Model Transfer in the context of Semantic Onboarding? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "SAP BW/4HANA Model Transfer leverages BW Queries for model generation in SAP Datasphere.",
+      "B": "Model Transfer can be leveraged from an On-premise environment to the cloud the other way around.",
+      "C": "SAP BW bridge Model Transfer leverages BW Modeling tools to import entities into native SAP Datasphere.",
+      "D": "SAP S/4HANA Model Transfer leverages ABAP CDS views for model generation in SAP Datasphere."
+    },
+    "correctAnswer": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "id": "1765805130422",
+    "type": "multiple",
+    "text": "For which scenarios do you use the SAP HANA model focus? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Load snapshots using ABAP CDS Views.",
+      "B": "Build views procedures using SQL script.",
+      "C": "Define ABAP Managed Database Procedures in data flows.",
+      "D": "Define calculations using geospatial functions."
+    },
+    "correctAnswer": [
+      "B",
+      "D"
+    ]
+  },
+  {
+    "id": "1765805367806",
+    "type": "multiple",
+    "text": "What are some of the benefits of using an InfoSource in a data flow? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Splitting a complex transformation into simple parts without storing intermediate data",
+      "B": "Providing the delta extraction information of the source data",
+      "C": "Enabling a data transfer process (DTP) to process multiple sequential transformations",
+      "D": "Realizing direct access to source data without storing them"
+    },
+    "correctAnswer": [
+      "A",
+      "C"
+    ]
+  },
+  {
+    "id": "1765805674672",
+    "type": "multiple",
+    "text": "What does a Composite Provider allow you to do in SAP BW/4HANA? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Join two ABAP CDS views.",
+      "B": "Create new calculated fields.",
+      "C": "Define new restricted key figures.",
+      "D": "Integrate SAP HANA calculation views.",
+      "E": "Combine InfoProviders using Joins Unions."
+    },
+    "correctAnswer": [
+      "B",
+      "C",
+      "E"
+    ]
+  },
+  {
+    "id": "1765806016564",
+    "type": "multiple",
+    "text": "You defined a condition in a BW query for the top 10 of 100 customers based on sales revenue. Using key figure properties in the BW query which two scenarios regarding result presentation can be achieved? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "One result row with the sales revenue sum of all 100 customers",
+      "B": "One result row with the sales revenue sum of the top 10 customers a second result row with the sales revenue sum of all 100 customers",
+      "C": "One result row with the sales revenue sum of the top 10 customers",
+      "D": "One result row with the sales revenue sum of the top 10 customers a second result row with the sales revenue sum of the other 90 customers"
+    },
+    "correctAnswer": [
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765806148315",
+    "type": "multiple",
+    "text": "What should you consider when you set the High Cardinality flag for a characteristic? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "You cannot use this characteristic as a navigation attribute for another characteristic.",
+      "B": "You cannot use navigation attributes for this characteristic.",
+      "C": "You cannot load more than 2 billion master data records for this characteristic.",
+      "D": "You cannot use this characteristic as an external characteristic in hierarchies."
+    },
+    "correctAnswer": [
+      "A",
+      "B"
+    ]
+  },
+  {
+    "id": "1765806443429",
+    "type": "multiple",
+    "text": "What are valid options when using the Data Flow feature of SAP Datasphere? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "NumPy Pas are automatically converted to SQL script.",
+      "B": "Python language can be used for complex transformation.",
+      "C": "Data can be combined using Union or Join operators.",
+      "D": "Remote tables can be used as target objects.",
+      "E": "Target mode can be Append Truncate or Delete."
+    },
+    "correctAnswer": [
+      "B",
+      "C",
+      "E"
+    ]
+  },
+  {
+    "id": "1765806663062",
+    "type": "multiple",
+    "text": "Which options do you have when using the remote table feature in SAP Datasphere? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Data can be persisted in SAP Datasphere by creating a snapshot (copy of data).",
+      "B": "Data can be persisted by using real-time replication.",
+      "C": "Data can be loaded using advanced transformation capabilities.",
+      "D": "Data can be accessed virtually by remote access to the source system.",
+      "E": "Data access can be switched from virtual to persisted but not the other way around."
+    },
+    "correctAnswer": [
+      "A",
+      "B",
+      "D"
+    ]
+  },
+  {
+    "id": "1765806758526",
+    "type": "multiple",
+    "text": "Which features of an SAP BW/4HANA InfoObject are intended to reduce physical data storage space? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Reference characteristic",
+      "B": "Transitive attribute",
+      "C": "Compounding characteristic",
+      "D": "Enhanced master data update"
+    },
+    "correctAnswer": [
+      "A",
+      "B"
+    ]
+  },
+  {
+    "id": "1765806890864",
+    "type": "multiple",
+    "text": "Which join types can you use in a Composite Provider? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Text join",
+      "B": "Temporal hierarchy join",
+      "C": "Full Outer join",
+      "D": "Referential join",
+      "E": "Inner join"
+    },
+    "correctAnswer": [
+      "A",
+      "D",
+      "E"
+    ]
+  },
+  {
+    "id": "1765807125040",
+    "type": "multiple",
+    "text": "You have an existing field-based data flow that follows the layered scalable architecture (LSA++) concept. To meet a new urgent business requirement for field you want to leverage a hierarchy of an existing characteristic without changing the transformation.\nHow can you achieve this? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Assign hierarchy properties to the field in the BW Query",
+      "B": "Add the characteristic to the DataStore object (advanced)",
+      "C": "Associate the field with the characteristic in the Open ODS View",
+      "D": "Associate the field with the characteristic in the CompositeProvider"
+    },
+    "correctAnswer": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "id": "1765862469576",
+    "type": "multiple",
+    "text": "Which tasks are part of the Business Blueprint phase in an SAP BW/4HANA project? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Analyze key performance indicators of the business processes",
+      "B": "Associate an InfoObject to a field in an Open ODS view",
+      "C": "Activate SAP business content objects that comply with the layered scalable architecture (LSA++) architecture",
+      "D": "Collect central individual information requirements"
+    },
+    "correctAnswer": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "id": "1765862580471",
+    "type": "multiple",
+    "text": "For which requirements do you suggest an SAP HANA modeling focus rather than an SAP BW/4HANA modeling focus? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Finding the best match using a fuzzy search",
+      "B": "Loading snapshots or deltas from different sources on a periodic basis",
+      "C": "Leveraging SQL in-house knowledge",
+      "D": "Reporting on a harmonized set of master data"
+    },
+    "correctAnswer": [
+      "A",
+      "C"
+    ]
+  },
+  {
+    "id": "1765862732847",
+    "type": "multiple",
+    "text": "You created an Open ODS View on an SAP HANA database table to virtually consume the data in SAP BW/4HANA. Real-time reporting requirements have now changed you are asked to persist the data in SAP BW/4HANA.\nWhich objects are created when using the \"Generate Data Flow\" function in the Open ODS View editor? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "DataStore object (advanced)",
+      "B": "SAP HANA calculation view",
+      "C": "Transformation",
+      "D": "Data source",
+      "E": "CompositeProvider"
+    },
+    "correctAnswer": [
+      "A",
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765862948743",
+    "type": "multiple",
+    "text": "You are involved in an SAP BW/4HANA project focusing on General Ledger reporting want to use the SAP ERP stard DataSource OFI_GL_14 (New GL Items) which is not active in your SAP ERP system.\nWhich transactions can be used to activate this DataSource? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Transaction RSORBCT (Data Warehousing Workbench: BI Content) in the SAP BW/4HANA system",
+      "B": "Transaction RSA5 (Installation of DataSource from Business Content) in the SAP ERP system",
+      "C": "Transaction RSA2 (DataSource Repository) in the SAP ERP system",
+      "D": "Transaction RSDS (DataSource Repository) in the SAP BW/4HANA system"
+    },
+    "correctAnswer": [
+      "B",
+      "C"
+    ]
+  },
+  {
+    "id": "1765863045487",
+    "type": "multiple",
+    "text": "Where can you use an authorization variable? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "In the definition of a query filter",
+      "B": "In the definition of a characteristic value variable",
+      "C": "In the definition of a calculated key figure",
+      "D": "In the definition of a restricted key figure"
+    },
+    "correctAnswer": [
+      "A",
+      "B"
+    ]
+  },
+  {
+    "id": "1765863134920",
+    "type": "multiple",
+    "text": "Which source systems are supported in SAP BW bridge? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "SAP Ariba",
+      "B": "SAP ECC",
+      "C": "SAP Success Factors",
+      "D": "SAP S/4HANA on-premise",
+      "E": "SAP S/4HANA Cloud"
+    },
+    "correctAnswer": [
+      "B",
+      "D",
+      "E"
+    ]
+  },
+  {
+    "id": "1765863435895",
+    "type": "multiple",
+    "text": "Which are purposes of the Open Operational Data Store layer in the layered scalable architecture (LSA++) of SAP BW/4HANA? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Harmonization of data from several source systems",
+      "B": "Transformations of data based on business logic",
+      "C": "Initial staging of source system data",
+      "D": "Real-time reporting on source system data without staging"
+    },
+    "correctAnswer": [
+      "A",
+      "C"
+    ]
+  },
+  {
+    "id": "1765863521496",
+    "type": "multiple",
+    "text": "Which types of values can be protected by analysis authorizations? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Characteristic values",
+      "B": "Display attribute values",
+      "C": "Key figure values",
+      "D": "Hierarchy node values"
+    },
+    "correctAnswer": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "id": "1765863649960",
+    "type": "multiple",
+    "text": "Which objects values can be affected by the key date in a BW query? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Display attributes",
+      "B": "Basic key figures",
+      "C": "Time characteristics",
+      "D": "Hierarchies",
+      "E": "Navigation attributes"
+    },
+    "correctAnswer": [
+      "A",
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765863925855",
+    "type": "multiple",
+    "text": "Which SAP BW/4HANA objects can be used as sources of a data transfer process (DTP)? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "DataStore Object (advanced)",
+      "B": "Open ODS view",
+      "C": "InfoSource",
+      "D": "CompositeProvider"
+    },
+    "correctAnswer": [
+      "A",
+      "C"
+    ]
+  },
+  {
+    "id": "1765864134895",
+    "type": "multiple",
+    "text": "Which SAP BW/4HANA objects support the feature of generating an external SAP HANA View? Note:There are 2 correct answers to this question.",
+    "options": {
+      "A": "BW query",
+      "B": "Open ODS view",
+      "C": "Composite Provider",
+      "D": "Semantic group object"
+    },
+    "correctAnswer": [
+      "A",
+      "C"
+    ]
+  },
+  {
+    "id": "1765864239431",
+    "type": "multiple",
+    "text": "For which reasons should you run an SAP HANA delta merge? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "To decrease memory consumption",
+      "B": "To combine the query cache from different executions",
+      "C": "To move the most recent data from disk to memory",
+      "D": "To improve the read performance of InfoProviders"
+    },
+    "correctAnswer": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "id": "1765864346182",
+    "type": "multiple",
+    "text": "Which objects in SAP BW/4HANA allow you to use both fields InfoObjects in their definition? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Hierarchy",
+      "B": "InfoObject type Key Figure",
+      "C": "Open ODS View",
+      "D": "DataStore Object (advanced)",
+      "E": "Composite Provider"
+    },
+    "correctAnswer": [
+      "C",
+      "D",
+      "E"
+    ]
+  },
+  {
+    "id": "1765872170666",
+    "type": "multiple",
+    "text": "For what reasons is the start process a special type of process in a process chain? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Only one start process is allowed for each process chain.",
+      "B": "It can be embedded in a Meta chain.",
+      "C": "It can be a successor to another process.",
+      "D": "It is the only process that can be scheduled without a predecessor."
+    },
+    "correctAnswer": [
+      "A",
+      "D"
+    ]
+  },
+  {
+    "id": "1765872507778",
+    "type": "multiple",
+    "text": "What are the possible ways to fill a pre-calculated value set (bucket)? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "By using a BW query (update value set by query)",
+      "B": "By accessing an SAP HANA HDI Calculation View of data category Dimension",
+      "C": "By using a transformation data transfer process (DTP)",
+      "D": "By entering the values manually",
+      "E": "By referencing a table"
+    },
+    "correctAnswer": [
+      "A",
+      "D",
+      "E"
+    ]
+  },
+  {
+    "id": "1765872588025",
+    "type": "multiple",
+    "text": "What are some of the advantages of using SAP BW/4HANA business content? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "Automatic content activation during installation of SAP BW/4HANA",
+      "B": "Automatic generation of Analysis Authorizations during SAP BW/4HANA content activation",
+      "C": "Accelerated SAP BW/4HANA implementation using ready-made models",
+      "D": "Ability to modify business content objects to meet customer specific requirements"
+    },
+    "correctAnswer": [
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765872704345",
+    "type": "multiple",
+    "text": "You create a Data Store object (advanced) using the \"Data Mart DataStore Object\" modeling property. Which behaviors are specific to this modeling property? Note: There are 2 correct answers to this question.",
+    "options": {
+      "A": "The change log table will be filled only after data activation.",
+      "B": "Query results are shown only when data has been activated.",
+      "C": "Reporting is done based on a union of the inbound active tables.",
+      "D": "The records are treated as if all characteristics are in the key."
+    },
+    "correctAnswer": [
+      "C",
+      "D"
+    ]
+  },
+  {
+    "id": "1765873054225",
+    "type": "multiple",
+    "text": "Which modeling decisions may have side effects on runtime performance? Note: There are 3 correct answers to this question.",
+    "options": {
+      "A": "Use a transitive attribute instead of an attribute that is directly assigned to a characteristic.",
+      "B": "Uncheck the \"Write change log\" property for a Stard DataStore Object.",
+      "C": "Move a characteristic within a DataMart DataStore object to a different group.",
+      "D": "Change a time-independent attribute of a characteristic to a time-dependent attribute.",
+      "E": "Include a characteristic from the underlying DataMart DataStore Object in the CompositeProvider instead of a navigation attribute."
+    },
+    "correctAnswer": [
+      "A",
+      "B",
+      "E"
+    ]
+  }
+]
